@@ -74,7 +74,7 @@ function GetMediaCreatedDate($File) {
             $CreatedDate = [String]::Format("{0}/{1}/{2} {3}:{4}:{5}", $Year, $Month, $Day, $Hour, $Minute, $Second)
         }
 
-        if ($File.Name.Contains('.M2TS') -or $File.Name.Contains('.m2ts')) {
+        if ($File.Name.Contains('.M2TS') -or $File.Name.Contains('.m2ts') -or $File.Name.Contains('.MTS')) {
             
             $Year = $File.Name.substring(0,4)
 	        $Month = $File.Name.substring(4,2)
