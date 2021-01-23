@@ -27,9 +27,9 @@ $MediaModifiedColumn = 3
 #[reflection.assembly]::loadfile( "C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Drawing.dll") 
 #$MediaCreatedColumn = 191
 
-$SourceRootPath = "D:\Organisoitavat"
-$DestinationRootPath = "D:\Organisoitu"
-$FileTypesToOrganize = @("*.jpg","*.jpeg","*.avi","*.mp4", "*.3gp", "*.mov", "*.png", "*.MTS", "*.gif")
+$SourceRootPath = "C:\Users\kimhi\Desktop\Kuvat ja videot\Organisoitavat"
+$DestinationRootPath = "C:\Users\kimhi\Desktop\Kuvat ja videot\Organisoitu"
+$FileTypesToOrganize = @("*.jpg","*.jpeg","*.avi","*.mp4", "*.3gp", "*.mov", "*.png", "*.MTS", "*.gif", "*.M2TS")
 $global:ConfirmAll = $false
 
 function GetMediaCreatedDate($File) {
@@ -70,6 +70,18 @@ function GetMediaCreatedDate($File) {
 	        $Hour = $File.Name.substring(11,2)
 	        $Minute = $File.Name.substring(14,2)
 	        $Second = $File.Name.substring(17,2)
+        
+            $CreatedDate = [String]::Format("{0}/{1}/{2} {3}:{4}:{5}", $Year, $Month, $Day, $Hour, $Minute, $Second)
+        }
+
+        if ($File.Name.Contains('.M2TS')) {
+            
+            $Year = $File.Name.substring(0,4)
+	        $Month = $File.Name.substring(4,2)
+	        $Day = $File.Name.substring(7,2)
+	        $Hour = $File.Name.substring(10,2)
+	        $Minute = $File.Name.substring(13,2)
+	        $Second = $File.Name.substring(16,2)
         
             $CreatedDate = [String]::Format("{0}/{1}/{2} {3}:{4}:{5}", $Year, $Month, $Day, $Hour, $Minute, $Second)
         }
