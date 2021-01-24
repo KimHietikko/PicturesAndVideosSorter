@@ -27,8 +27,8 @@ $MediaModifiedColumn = 3
 #[reflection.assembly]::loadfile( "C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Drawing.dll") 
 #$MediaCreatedColumn = 191
 
-$SourceRootPath = "C:\Users\kimhi\Desktop\Kuvat ja videot\Organisoitavat"
-$DestinationRootPath = "C:\Users\kimhi\Desktop\Kuvat ja videot\Organisoitu"
+$SourceRootPath = "D:\Organisoitavat"
+$DestinationRootPath = "D:\Organisoidut"
 $FileTypesToOrganize = @("*.jpg","*.jpeg","*.avi","*.mp4", "*.3gp", "*.mov", "*.png", "*.MTS", "*.gif", "*.M2TS")
 $global:ConfirmAll = $false
 
@@ -136,6 +136,20 @@ function GetDateTakenFromExifData($File) {
         
             $ascii = $false
 
+            $DateTimePropertyItem = [String]::Format("{0}/{1}/{2} {3}:{4}:{5}", $Year, $Month, $Day, $Hour, $Minute, $Second)
+        }
+
+        if($File.Name.Contains('-WA')) {
+
+            $Year = $File.Name.substring(4,4)
+	        $Month = $File.Name.substring(8,2)
+	        $Day = $File.Name.substring(10,2)
+	        $Hour = '00'
+	        $Minute = '00'
+	        $Second = '00'
+
+            $ascii = $false
+        
             $DateTimePropertyItem = [String]::Format("{0}/{1}/{2} {3}:{4}:{5}", $Year, $Month, $Day, $Hour, $Minute, $Second)
         }
 
