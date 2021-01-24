@@ -50,7 +50,7 @@ function GetMediaCreatedDate($File) {
             $CreatedDate = [String]::Format("{0}/{1}/{2} {3}:{4}:{5}", $Year, $Month, $Day, $Hour, $Minute, $Second)
         }
 
-        if($File.Name.Contains('WhatsApp Video ')) {
+        if($File.Name.Contains('WhatsApp Video ') -and !$CreatedDate) {
 
             $Year = $File.Name.substring(15,4)
 	        $Month = $File.Name.substring(20,2)
@@ -62,7 +62,7 @@ function GetMediaCreatedDate($File) {
             $CreatedDate = [String]::Format("{0}/{1}/{2} {3}:{4}:{5}", $Year, $Month, $Day, $Hour, $Minute, $Second)
         }
 
-        if ($File.Name.IndexOf('-') -eq 4 -and $File.Name.substring(7,1).contains('-') -and $File.Name.substring(10,1).contains('_') -and $File.Name.substring(13,1).contains('-') -and $File.Name.substring(16,1).contains('-')) {
+        if (($File.Name.IndexOf('-') -eq 4 -and $File.Name.substring(7,1).contains('-') -and $File.Name.substring(10,1).contains('_') -and $File.Name.substring(13,1).contains('-') -and $File.Name.substring(16,1).contains('-')) -and !$CreatedDate) {
             
             $Year = $File.Name.substring(0,4)
 	        $Month = $File.Name.substring(5,2)
@@ -74,7 +74,7 @@ function GetMediaCreatedDate($File) {
             $CreatedDate = [String]::Format("{0}/{1}/{2} {3}:{4}:{5}", $Year, $Month, $Day, $Hour, $Minute, $Second)
         }
 
-        if ($File.Name.Contains('.M2TS') -or $File.Name.Contains('.m2ts') -or $File.Name.Contains('.MTS')) {
+        if (($File.Name.Contains('.M2TS') -or $File.Name.Contains('.m2ts') -or $File.Name.Contains('.MTS')) -and !$CreatedDate) {
             
             $Year = $File.Name.substring(0,4)
 	        $Month = $File.Name.substring(4,2)
@@ -139,7 +139,7 @@ function GetDateTakenFromExifData($File) {
             $DateTimePropertyItem = [String]::Format("{0}/{1}/{2} {3}:{4}:{5}", $Year, $Month, $Day, $Hour, $Minute, $Second)
         }
 
-        if($File.Name.Contains('-WA')) {
+        if($File.Name.Contains('-WA') -and !$DateTimePropertyItem) {
 
             $Year = $File.Name.substring(4,4)
 	        $Month = $File.Name.substring(8,2)
@@ -153,7 +153,7 @@ function GetDateTakenFromExifData($File) {
             $DateTimePropertyItem = [String]::Format("{0}/{1}/{2} {3}:{4}:{5}", $Year, $Month, $Day, $Hour, $Minute, $Second)
         }
 
-        if($File.Name.Contains('Screenshot_') -and $File.Name.Contains('.jpg')) {
+        if($File.Name.Contains('Screenshot_') -and $File.Name.Contains('.jpg') -and !$DateTimePropertyItem) {
 
             $Year = $File.Name.substring(11,4)
 	        $Month = $File.Name.substring(15,2)
@@ -167,7 +167,7 @@ function GetDateTakenFromExifData($File) {
             $DateTimePropertyItem = [String]::Format("{0}/{1}/{2} {3}:{4}:{5}", $Year, $Month, $Day, $Hour, $Minute, $Second)
         }
 
-        if($File.Name.Contains('Screenshot_') -and $File.Name.Contains('.png')) {
+        if($File.Name.Contains('Screenshot_') -and $File.Name.Contains('.png') -and !$DateTimePropertyItem) {
 
             $Year = $File.Name.substring(11,4)
 	        $Month = $File.Name.substring(16,2)
@@ -181,7 +181,7 @@ function GetDateTakenFromExifData($File) {
             $DateTimePropertyItem = [String]::Format("{0}/{1}/{2} {3}:{4}:{5}", $Year, $Month, $Day, $Hour, $Minute, $Second)
         }
 
-        if ($File.Name.IndexOf('-') -eq 4 -and $File.Name.substring(7,1).contains('-') -and $File.Name.substring(10,1).contains(' ') -and $File.Name.substring(13,1).contains('.') -and $File.Name.substring(16,1).contains('.') -and ($File.Name.Contains('.png') -or $File.Name.Contains('.gif'))) {
+        if (($File.Name.IndexOf('-') -eq 4 -and $File.Name.substring(7,1).contains('-') -and $File.Name.substring(10,1).contains(' ') -and $File.Name.substring(13,1).contains('.') -and $File.Name.substring(16,1).contains('.') -and ($File.Name.Contains('.png') -or $File.Name.Contains('.gif'))) -and !$DateTimePropertyItem) {
             
             $Year = $File.Name.substring(0,4)
 	        $Month = $File.Name.substring(5,2)
