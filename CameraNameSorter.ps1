@@ -2,18 +2,9 @@
 # 
 # Microsoft PowerShell Source File 
 # 
-# This script will organize photo and video files by renaming the file based on the date the
-# file was created and moving them into folders based on the year and month. It will also append
-# a random number to the end of the file name just to avoid name collisions. The script will
-# look in the SourceRootPath (recursing through all subdirectories) for any files matching
-# the extensions in FileTypesToOrganize. It will rename the files and move them to folders under
-# DestinationRootPath, e.g. DestinationRootPath\2011\02_February\2011-02-09_21-41-47_680.jpg
+# This script will organize photos by camera name from the exif data.
 # 
-# JPG files contain EXIF data which has a DateTaken value. Other media files have a MediaCreated
-# date. 
-# 
-# Original Author: ToddRopog
-# Edited: KimHietikko
+# Original Author: KimHietikko
 #
 # ============================================================================================== 
 
@@ -27,6 +18,7 @@
 
 $SourceRootPath = "E:\Kuvia vuosien saatossa"
 $DestinationRootPath = "D:\Organisoidut"
+$EXIFCameraName = "FUJIFILM"
 $FileTypesToOrganize = @("*.jpg","*.jpeg")
 $global:ConfirmAll = $false
 
@@ -91,7 +83,7 @@ Write-Host "Begin Organize"
 $Files = GetAllSourceFiles
 foreach ($File in $Files) {
 	$CameraName = GetCamera($File)
-	if ($CameraName -eq "FUJIFILM") {
+	if ($CameraName -eq $EXIFCameraName) {
 		$DestinationPath = BuildDesinationPath $DestinationRootPath $CameraName[1]
 		CreateDirectory $DestinationPath
 		$NewFilePath = BuildNewFilePath $DestinationPath $File.Name
