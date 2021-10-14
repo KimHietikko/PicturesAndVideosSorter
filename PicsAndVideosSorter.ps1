@@ -113,12 +113,12 @@ function GetDateTakenFromExifData($File) {
 	$FileDetail = New-Object -TypeName System.Drawing.Bitmap -ArgumentList $File.Fullname 
 	$DateTimePropertyItem
 
-    if ($FileDetail.PropertyIdList.Contains(36867)) {
+    if ($FileDetail.PropertyIdList.Contains(36867)) { # Date taken (not date created)
         $DateTimePropertyItem = $FileDetail.GetPropertyItem(36867)
     }
 	
 	if (!$DateTimePropertyItem) {
-        if ($FileDetail.PropertyIdList.Contains(306)) {
+        if ($FileDetail.PropertyIdList.Contains(306)) { # Date modified
             $DateTimePropertyItem = $FileDetail.GetPropertyItem(306)
         }
 	}
