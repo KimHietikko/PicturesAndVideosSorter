@@ -245,7 +245,7 @@ function GetCreationDate($File) {
 }
 
 function BuildDesinationPath($Path, $Date) {
-	return [String]::Format("{0}\{1}\{2}_{3}\{4}", $Path, $Date.Year, $Date.ToString("MM"), $Date.ToString("MMMM"), $Date.ToString("dd.MM.yyyy"))
+	return [String]::Format("{0}\{1}", $Path, $Date.Year)
 }
 
 $RandomGenerator = New-Object System.Random
