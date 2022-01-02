@@ -194,6 +194,20 @@ function GetDateTakenFromExifData($File) {
 
             $DateTimePropertyItem = [String]::Format("{0}/{1}/{2} {3}:{4}:{5}", $Year, $Month, $Day, $Hour, $Minute, $Second)
         }
+	
+	if (($File.Name.IndexOf('-') -eq 4 -and $File.Name.substring(7,1).contains('-') -and $File.Name.substring(10,1).contains('_') -and $File.Name.substring(13,1).contains('-') -and $File.Name.substring(16,1).contains('-')) -and !$DateTimePropertyItem) {
+            
+            $Year = $File.Name.substring(0,4)
+	        $Month = $File.Name.substring(5,2)
+	        $Day = $File.Name.substring(8,2)
+	        $Hour = $File.Name.substring(11,2)
+	        $Minute = $File.Name.substring(14,2)
+	        $Second = $File.Name.substring(17,2)
+        
+            $ascii = $false
+
+            $DateTimePropertyItem = [String]::Format("{0}/{1}/{2} {3}:{4}:{5}", $Year, $Month, $Day, $Hour, $Minute, $Second)
+        }
     }
 
     if (!$DateTimePropertyItem) {
