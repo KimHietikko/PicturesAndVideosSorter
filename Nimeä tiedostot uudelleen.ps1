@@ -1,0 +1,1 @@
+Get-ChildItem *.mp4 | Rename-Item -NewName { $_.Name -replace 'Copy of','' }
