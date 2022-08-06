@@ -31,6 +31,7 @@ $SourceRootPath = "D:\Organisoitavat"
 $DestinationRootPath = "D:\Organisoidut"
 $FileTypesToOrganize = @("*.jpg","*.jpeg","*.avi","*.mp4", "*.3gp", "*.mov", "*.png", "*.MTS", "*.gif", "*.M2TS")
 $global:ConfirmAll = $false
+$global:BurstMode = $false
 
 function GetMediaCreatedDate($File) {
 	$Shell = New-Object -ComObject Shell.Application
@@ -263,8 +264,13 @@ function BuildDesinationPath($Path, $Date) {
 }
 
 $RandomGenerator = New-Object System.Random
-function BuildNewFilePath($Path, $Date, $Extension) {
-	return [String]::Format("{0}\{1}_{2}_{3}{4}", $Path, $Date.ToString("yyyy-MM-dd_HH-mm-ss"), $RandomGenerator.Next(100, 10000).ToString(), $RandomGenerator.Next(100, 10000).ToString(), $Extension)
+function BuildNewFilePath($Path, $Date, $Extension, $OrderNumber) {
+	if ($global:BurstMode -eq $true) {
+		return [String]::Format("{0}\{1}_{2}{3}", $Path, $Date.ToString("yyyy-MM-dd_HH-mm-ss"), $OrderNumber, $Extension) #Burst mode pictures rename
+	} else {
+		return [String]::Format("{0}\{1}_{2}_{3}{4}", $Path, $Date.ToString("yyyy-MM-dd_HH-mm-ss"), $RandomGenerator.Next(100, 10000).ToString(), $RandomGenerator.Next(100, 10000).ToString(), $Extension) #Normal pictures and videos
+	}
+
 }
 
 function CreateDirectory($Path){
@@ -297,7 +303,12 @@ foreach ($File in $Files) {
 	if ($null -ne ($CreationDate -as [DateTime])) {
 		$DestinationPath = BuildDesinationPath $DestinationRootPath $CreationDate
 		CreateDirectory $DestinationPath
-		$NewFilePath = BuildNewFilePath $DestinationPath $CreationDate $File.Extension
+
+		if ($global:BurstMode -eq $true) {
+			$NewFilePath = BuildNewFilePath $DestinationPath $CreationDate $File.Extension $File.Name.substring(20,3)
+		} else {
+			$NewFilePath = BuildNewFilePath $DestinationPath $CreationDate $File.Extension
+		}
 		
 		Write-Host $File.FullName -> $NewFilePath
 		if (!(Test-Path $NewFilePath)) {
